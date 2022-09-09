@@ -16,8 +16,6 @@ const Animal = {
 
 function start() {
   console.log("ready");
-
-  // TODO: Add event-listeners to filter and sort buttons
   loadJSON();
   document.querySelector(".filter:nth-child(1)").addEventListener("click", getFilterChoice);
   document.querySelector(".filter:nth-child(2)").addEventListener("click", getFilterChoice);
@@ -31,46 +29,17 @@ function getFilterChoice(event) {
   loadJSON(this.dataset.filter);
 }
 
-///SET FILTER CHOICE ///////
-/* function setFilterChoice(animal) {
-  console.log(option);
-  if (animal.type === option) {
-    return true;
-  } else {
-    return false;
-  }
-} */
-
-function setDogFilter() {
-  console.log("setDogFilter function called");
-  if (animal.type !== "dog") {
-    return false;
-  } else {
-    return true;
-  }
-}
-function setCatFilter() {
-  console.log("setCatFilter function called");
-  if (animal.type !== "cat") {
-    return false;
-  } else {
-    return true;
-  }
-}
-
 async function loadJSON(option) {
   const response = await fetch("animals.json");
   const jsonData = await response.json();
-
   // when loaded, prepare data objects
 
-  // how can I send prepareObjects the data option????????????hmmmm
+  //send prepareObjects the option(dataset.filter)
   prepareObjects(jsonData, option);
 }
 function prepareObjects(jsonData, option) {
   allAnimals = jsonData.map(preapareObject);
   filteredAnimal = allAnimals.filter((animal) => {
-    console.log(option);
     if (animal.type === option) {
       return true;
     } else {
@@ -79,10 +48,10 @@ function prepareObjects(jsonData, option) {
   });
 
   // TODO: This might not be the function we want to call first
-
-  // how could it display not allAnimals but a select few - sorted list
-
-  //how could code now at this point wheter it is cat or dog etc
+  if (!option) {
+    displayList(allAnimals);
+  }
+  //if option all display all animals
   if (option === "*") {
     displayList(allAnimals);
   }
