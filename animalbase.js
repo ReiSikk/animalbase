@@ -28,8 +28,17 @@ function start() {
 
 //GET SORTING CHOICE
 function getSortingChoice(event) {
-  let sortBy = this.dataset.sort;
-  sortList(sortBy);
+  const sortBy = this.dataset.sort;
+  const sortDir = this.dataset.sortDirection;
+
+  // toggle the direction
+  if (sortDir === "asc") {
+    this.dataset.sortDirection = "desc";
+  } else {
+    this.dataset.sortDirection = "asc";
+  }
+  console.log(`User selected ${sortBy} - ${sortDir}`);
+  sortList(sortBy, sortDir);
 }
 
 /// GET THE FILTER CHOICE
@@ -107,16 +116,21 @@ function displayAnimal(animal) {
   document.querySelector("#list tbody").appendChild(clone);
 }
 
-function sortList(sortBy) {
+function sortList(sortBy, sortDir) {
   let sortedList = allAnimals;
-
+  let dir = -1;
+  if (sortDir === "desc") {
+    dir = -1;
+  } else {
+    dir = 1;
+  }
   sortedList = sortedList.sort(sortByProperty);
 
   function sortByProperty(animalA, animalB) {
     if (animalA[sortBy] < animalB[sortBy]) {
-      return -1;
+      return -1 * dir;
     } else {
-      return 1;
+      return 1 * dir;
     }
   }
   displayList(sortedList);
