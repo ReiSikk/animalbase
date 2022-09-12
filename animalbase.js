@@ -20,9 +20,17 @@ function start() {
   document.querySelector(".filter:nth-child(1)").addEventListener("click", getFilterChoice);
   document.querySelector(".filter:nth-child(2)").addEventListener("click", getFilterChoice);
   document.querySelector(".filter:nth-child(3)").addEventListener("click", getFilterChoice);
+  document.querySelector("[data-sort=name]").addEventListener("click", getSortingChoice);
+  document.querySelector("[data-sort=type]").addEventListener("click", getSortingChoice);
 }
 
-///// GET THE FILTER CHOICE
+//GET SORTING CHOICE
+function getSortingChoice(event) {
+  let sortBy = this.dataset.sort;
+  sortList(sortBy);
+}
+
+/// GET THE FILTER CHOICE
 function getFilterChoice(event) {
   let filterChoice = this.dataset.filter;
   console.log(filterChoice);
@@ -95,4 +103,29 @@ function displayAnimal(animal) {
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
+}
+
+function sortList(sortBy) {
+  let sortedList = allAnimals;
+  if (sortBy === "name") {
+    sortedList = sortedList.sort(sortByName);
+  } else if (sortBy === "type") {
+    sortedList = sortedList.sort(sortByType);
+  }
+  displayList(sortedList);
+}
+
+function sortByName(animalA, animalB) {
+  if (animalA.name < animalB.name) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+function sortByType(animalA, animalB) {
+  if (animalA.type < animalB.type) {
+    return -1;
+  } else {
+    return 1;
+  }
 }
