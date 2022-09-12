@@ -5,6 +5,7 @@ window.addEventListener("DOMContentLoaded", start);
 let allAnimals = [];
 let filterChoice;
 let filteredAnimal = [];
+let filterBy = "all";
 
 // The prototype for all animals:
 const Animal = {
@@ -46,7 +47,13 @@ function getFilterChoice(event) {
   let filterChoice = this.dataset.filter;
   console.log(filterChoice);
   loadJSON(this.dataset.filter);
+  /* setFilter(); */
 }
+
+/* function setFilter(filterChoice) {
+  filterBy = filterChoice;
+  buildList();
+} */
 
 async function loadJSON(option) {
   const response = await fetch("animals.json");
@@ -66,7 +73,6 @@ function prepareObjects(jsonData, option) {
     }
   });
 
-  // TODO: This might not be the function we want to call first
   if (!option) {
     displayList(allAnimals);
   }
@@ -80,6 +86,7 @@ function prepareObjects(jsonData, option) {
   if (option === "cat") {
     displayList(filteredAnimal);
   }
+  /* return filteredAnimal; */
 }
 
 function preapareObject(jsonObject) {
@@ -135,3 +142,10 @@ function sortList(sortBy, sortDir) {
   }
   displayList(sortedList);
 }
+
+/* function buildList() {
+  const currentList = prepareObjects(allAnimals);
+  const sortList = sortList(currentList);
+
+  displayList(sortList);
+} */
