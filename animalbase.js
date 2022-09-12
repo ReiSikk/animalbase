@@ -22,6 +22,8 @@ function start() {
   document.querySelector(".filter:nth-child(3)").addEventListener("click", getFilterChoice);
   document.querySelector("[data-sort=name]").addEventListener("click", getSortingChoice);
   document.querySelector("[data-sort=type]").addEventListener("click", getSortingChoice);
+  document.querySelector("[data-sort=age]").addEventListener("click", getSortingChoice);
+  document.querySelector("[data-sort=desc]").addEventListener("click", getSortingChoice);
 }
 
 //GET SORTING CHOICE
@@ -107,25 +109,15 @@ function displayAnimal(animal) {
 
 function sortList(sortBy) {
   let sortedList = allAnimals;
-  if (sortBy === "name") {
-    sortedList = sortedList.sort(sortByName);
-  } else if (sortBy === "type") {
-    sortedList = sortedList.sort(sortByType);
+
+  sortedList = sortedList.sort(sortByProperty);
+
+  function sortByProperty(animalA, animalB) {
+    if (animalA[sortBy] < animalB[sortBy]) {
+      return -1;
+    } else {
+      return 1;
+    }
   }
   displayList(sortedList);
-}
-
-function sortByName(animalA, animalB) {
-  if (animalA.name < animalB.name) {
-    return -1;
-  } else {
-    return 1;
-  }
-}
-function sortByType(animalA, animalB) {
-  if (animalA.type < animalB.type) {
-    return -1;
-  } else {
-    return 1;
-  }
 }
