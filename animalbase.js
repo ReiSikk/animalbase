@@ -6,9 +6,11 @@ let allAnimals = [];
 let filterChoice;
 let filteredAnimal = [];
 let filterBy = "all";
+/* let star = false; */
 
 // The prototype for all animals:
 const Animal = {
+  star: "",
   name: "",
   desc: "-unknown animal-",
   type: "",
@@ -50,10 +52,10 @@ function getFilterChoice(event) {
   /* setFilter(); */
 }
 
-/* function setFilter(filterChoice) {
+function setFilter(filterChoice) {
   filterBy = filterChoice;
   buildList();
-} */
+}
 
 async function loadJSON(option) {
   const response = await fetch("animals.json");
@@ -97,6 +99,7 @@ function preapareObject(jsonObject) {
   animal.desc = texts[2];
   animal.type = texts[3];
   animal.age = jsonObject.age;
+  animal.star = false;
 
   return animal;
 }
@@ -114,13 +117,32 @@ function displayAnimal(animal) {
   const clone = document.querySelector("template#animal").content.cloneNode(true);
 
   // set clone data
+  clone.querySelector("[data-field=star]").textContent = "☆";
   clone.querySelector("[data-field=name]").textContent = animal.name;
   clone.querySelector("[data-field=desc]").textContent = animal.desc;
   clone.querySelector("[data-field=type]").textContent = animal.type;
   clone.querySelector("[data-field=age]").textContent = animal.age;
+  clone.querySelector("[data-field=star]").addEventListener("click", (event) => {
+    animal.star = !animal.star;
+    let starText;
+    if (animal.star) {
+      starText = "⭐️";
+    } else {
+      starText = "☆";
+    }
+    event.target.textContent = starText;
+  });
 
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
+}
+///SHOW star function
+function displayStar() {
+  if (!animal.star) {
+    animal.star.textContent = "hello";
+  } else {
+    animal.star.textContent = "hello";
+  }
 }
 
 function sortList(sortBy, sortDir) {
@@ -143,9 +165,9 @@ function sortList(sortBy, sortDir) {
   displayList(sortedList);
 }
 
-/* function buildList() {
+function buildList() {
   const currentList = prepareObjects(allAnimals);
   const sortList = sortList(currentList);
 
   displayList(sortList);
-} */
+}
